@@ -1005,163 +1005,165 @@
         </footer>
     </div>
 
-    <script>
-        // Variables para seguimiento de respuestas
-        let userAnswers = {
-            1: null,
-            2: null,
-            3: null,
-            4: null
-        };
-        
-        // Funcionalidad de pestañas
-        function openTab(tabName) {
-            // Ocultar todos los contenidos de pestañas
-            const tabContents = document.getElementsByClassName('tab-content');
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove('active');
-            }
-            
-            // Desactivar todas las pestañas
-            const tabs = document.getElementsByClassName('tab');
-            for (let i = 0; i < tabs.length; i++) {
-                tabs[i].classList.remove('active');
-            }
-            
-            // Mostrar la pestaña seleccionada
-            document.getElementById(tabName).classList.add('active');
-            
-            // Activar el botón de la pestaña seleccionada
-            event.currentTarget.classList.add('active');
+<script>
+    // -------------------------------
+    // Variables de seguimiento
+    // -------------------------------
+    let userAnswers = { 1: null, 2: null, 3: null, 4: null };
+
+
+    // -------------------------------
+    // Función para abrir pestañas
+    // -------------------------------
+    function openTab(tabName, clickedElement = null) {
+
+        // Ocultar todos los contenidos
+        const tabContents = document.getElementsByClassName('tab-content');
+        for (let i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove('active');
         }
-        
-        // Seleccionar opción en escenarios
-        function selectOption(element, scenarioNumber, correctness) {
-            // Guardar la respuesta del usuario
-            userAnswers[scenarioNumber] = correctness;
-            
-            // Resetear todas las opciones del escenario
-            const options = element.parentElement.querySelectorAll('.scenario-option');
-            options.forEach(opt => {
-                opt.classList.remove('selected', 'incorrect');
-            });
-            
-            // Marcar la opción seleccionada
-            element.classList.add('selected');
-            if (correctness === 'incorrect') {
-                element.classList.add('incorrect');
-            }
-            
-            // Mostrar feedback
-            const feedback = document.getElementById(`feedback-${scenarioNumber}`);
-            feedback.className = `scenario-feedback ${correctness}`;
-            
-            if (correctness === 'correct') {
-                feedback.innerHTML = `
-                    <h4>✅ ¡Decisión Correcta!</h4>
-                    <p>${getCorrectFeedback(scenarioNumber)}</p>
-                `;
-            } else {
-                feedback.innerHTML = `
-                    <h4>❌ Decisión Peligrosa</h4>
-                    <p>${getIncorrectFeedback(scenarioNumber)}</p>
-                `;
-            }
+
+        // Desactivar pestañas de navegación
+        const tabs = document.getElementsByClassName('tab');
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove('active');
         }
-        
-        // Obtener feedback correcto para cada escenario
-        function getCorrectFeedback(scenarioNumber) {
-            switch(scenarioNumber) {
-                case 1:
-                    return "Tu decisión de buscar refugio te protege de objetos que caen durante el sismo. Evacuar DURANTE el movimiento es peligroso por escombros y vidrios.";
-                case 2:
-                    return "Excelente decisión. La seguridad personal es primero. Alertar evita que más personas se expongan y activar el protocolo garantiza una limpieza segura.";
-                case 3:
-                    return "Decisión inteligente. La fatiga al volante causa miles de accidentes. Un descanso breve puede salvar vidas. Nunca confíes en que el café te mantendrá despierto.";
-                case 4:
-                    return "Actuaste con conocimiento. Los incendios eléctricos requieren extintores Clase C. El agua empeora la situación y puede electrocutarte.";
-                default:
-                    return "¡Bien hecho! Has tomado la decisión correcta.";
-            }
+
+        // Mostrar pestaña destino
+        document.getElementById(tabName).classList.add('active');
+
+        // Activar visualmente la pestaña si el clic vino de una pestaña
+        if (clickedElement) {
+            clickedElement.classList.add('active');
         }
+
+        // Hacer scroll hasta inicio de la pestaña
+        document.getElementById(tabName).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+
+    // -------------------------------
+    // Selección de opciones
+    // -------------------------------
+    function selectOption(element, scenarioNumber, correctness) {
         
-        // Obtener feedback incorrecto para cada escenario
-        function getIncorrectFeedback(scenarioNumber) {
-            switch(scenarioNumber) {
-                case 1:
-                    return "Esta decisión te expone a caída de objetos y escombros. Lo seguro es refugiarse primero y evacuar SOLO después que termine el movimiento.";
-                case 2:
-                    return "Esta acción te expone a químicos peligrosos. Además, podrías empeorar la situación. La prioridad es alertar y evacuar el área.";
-                case 3:
-                    return "La fatiga no se cura con café. Tu cuerpo necesita descanso. Conducir con sueño reduce tus reflejos tanto como manejar ebrio.";
-                case 4:
-                    return "El agua conduce electricidad y puede electrocutarte o empeorar el incendio. Los incendios eléctricos requieren extintores especiales.";
-                default:
-                    return "Esta no es la decisión más segura para esta situación.";
-            }
+        userAnswers[scenarioNumber] = correctness;
+
+        // Resetear opciones del mismo escenario
+        const options = element.parentElement.querySelectorAll('.scenario-option');
+        options.forEach(opt => opt.classList.remove('selected', 'incorrect'));
+
+        // Marcar selección
+        element.classList.add('selected');
+        if (correctness === 'incorrect') element.classList.add('incorrect');
+
+        // Mostrar feedback
+        const feedback = document.getElementById(`feedback-${scenarioNumber}`);
+        feedback.className = `scenario-feedback ${correctness}`;
+
+        if (correctness === 'correct') {
+            feedback.innerHTML = `
+                <h4>✅ ¡Decisión Correcta!</h4>
+                <p>${getCorrectFeedback(scenarioNumber)}</p>
+            `;
+        } else {
+            feedback.innerHTML = `
+                <h4>❌ Decisión Peligrosa</h4>
+                <p>${getIncorrectFeedback(scenarioNumber)}</p>
+            `;
         }
-        
-        // Mostrar resultado final
-        function showFinalResult() {
-            const finalResult = document.getElementById('final-result');
-            const answeredCount = Object.values(userAnswers).filter(answer => answer !== null).length;
-            
-            if (answeredCount < 4) {
-                finalResult.innerHTML = `
-                    <div class="result-average">
-                        <div class="result-image">📝</div>
-                        <h3>Tu Historia está Incompleta</h3>
-                        <p>Has tomado decisiones en ${answeredCount} de 4 situaciones. Completa todas para conocer tu resultado.</p>
-                    </div>
-                `;
-                finalResult.style.display = 'block';
-                finalResult.scrollIntoView({ behavior: 'smooth' });
-                return;
-            }
-            
-            const correctCount = Object.values(userAnswers).filter(answer => answer === 'correct').length;
-            const percentage = (correctCount / 4) * 100;
-            
-            let resultClass, resultMessage, resultEmoji;
-            
-            if (percentage >= 75) {
-                resultClass = 'result-good';
-                resultEmoji = '🎉';
-                resultMessage = `
-                    <h3>¡Excelente! Eres un Líder en Seguridad</h3>
-                    <p>Tu historia demuestra que tienes gran conocimiento sobre seguridad laboral. Tomas decisiones correctas en situaciones de riesgo.</p>
-                    <p><strong>Decisiones acertadas: ${correctCount}/4 (${percentage}%)</strong></p>
-                    <p>Continúa siendo ejemplo de seguridad para tus compañeros.</p>
-                `;
-            } else if (percentage >= 50) {
-                resultClass = 'result-average';
-                resultEmoji = '👍';
-                resultMessage = `
-                    <h3>Buen Conocimiento de Seguridad</h3>
-                    <p>Tu historia muestra que tienes nociones de seguridad, pero hay áreas donde puedes mejorar tus decisiones.</p>
-                    <p><strong>Decisiones acertadas: ${correctCount}/4 (${percentage}%)</strong></p>
-                    <p>Revisa las situaciones donde tu decisión no fue la más segura.</p>
-                `;
-            } else {
-                resultClass = 'result-poor';
-                resultEmoji = '📚';
-                resultMessage = `
-                    <h3>Necesitas Fortalecer tu Conocimiento</h3>
-                    <p>Tu historia indica que es importante que estudies más sobre seguridad laboral.</p>
-                    <p><strong>Decisiones acertadas: ${correctCount}/4 (${percentage}%)</strong></p>
-                    <p>Revisa esta infografía completa y participa en capacitaciones de seguridad.</p>
-                `;
-            }
-            
+    }
+
+
+    // -------------------------------
+    // Feedback correcto por escenario
+    // -------------------------------
+    function getCorrectFeedback(n) {
+        switch(n) {
+            case 1: return "Tu decisión de buscar refugio te protege de objetos que caen durante el sismo. Evacuar DURANTE el movimiento es peligroso por escombros y vidrios.";
+            case 2: return "Excelente decisión. La seguridad personal es primero. Alertar evita que más personas se expongan y activar el protocolo garantiza una limpieza segura.";
+            case 3: return "Decisión inteligente. La fatiga al volante causa miles de accidentes. Un descanso breve puede salvar vidas.";
+            case 4: return "Actuaste correctamente. Los incendios eléctricos requieren extintores Clase C. El agua puede empeorar la situación.";
+            default: return "¡Bien hecho! Has tomado la decisión correcta.";
+        }
+    }
+
+
+    // -------------------------------
+    // Feedback incorrecto por escenario
+    // -------------------------------
+    function getIncorrectFeedback(n) {
+        switch(n) {
+            case 1: return "Evacuar durante el sismo te expone a objetos que caen. Lo seguro es refugiarse primero.";
+            case 2: return "Manipular químicos sin protección puede ser muy peligroso. Lo correcto es alertar y evacuar.";
+            case 3: return "El café NO reemplaza el descanso. Manejar con sueño es tan peligroso como manejar ebrio.";
+            case 4: return "El agua y la electricidad no se mezclan. Podrías electrocutarte o avivar el fuego.";
+            default: return "No es la decisión más segura.";
+        }
+    }
+
+
+    // -------------------------------
+    // Resultado final
+    // -------------------------------
+    function showFinalResult() {
+        const finalResult = document.getElementById('final-result');
+        const answeredCount = Object.values(userAnswers).filter(a => a !== null).length;
+
+        if (answeredCount < 4) {
             finalResult.innerHTML = `
-                <div class="${resultClass}">
-                    <div class="result-image">${resultEmoji}</div>
-                    ${resultMessage}
+                <div class="result-average">
+                    <div class="result-image">📝</div>
+                    <h3>Tu Historia está Incompleta</h3>
+                    <p>Has tomado decisiones en ${answeredCount} de 4 situaciones. Completa todas para ver tu resultado final.</p>
                 </div>
             `;
             finalResult.style.display = 'block';
             finalResult.scrollIntoView({ behavior: 'smooth' });
+            return;
         }
-    </script>
+
+        const correctCount = Object.values(userAnswers).filter(a => a === 'correct').length;
+        const percentage = (correctCount / 4) * 100;
+
+        let resultClass, resultEmoji, resultMessage;
+
+        if (percentage >= 75) {
+            resultClass = 'result-good';
+            resultEmoji = '🎉';
+            resultMessage = `
+                <h3>¡Excelente! Eres un Líder en Seguridad</h3>
+                <p>Tus decisiones muestran un sólido conocimiento en seguridad laboral.</p>
+                <p><strong>${correctCount}/4 correctas (${percentage}%)</strong></p>
+            `;
+        } else if (percentage >= 50) {
+            resultClass = 'result-average';
+            resultEmoji = '👍';
+            resultMessage = `
+                <h3>Buen Conocimiento</h3>
+                <p>Aún puedes reforzar algunos criterios de seguridad.</p>
+                <p><strong>${correctCount}/4 correctas (${percentage}%)</strong></p>
+            `;
+        } else {
+            resultClass = 'result-poor';
+            resultEmoji = '📚';
+            resultMessage = `
+                <h3>Necesitas Mejorar</h3>
+                <p>Revisa la infografía y capacítate para tomar mejores decisiones.</p>
+                <p><strong>${correctCount}/4 correctas (${percentage}%)</strong></p>
+            `;
+        }
+
+        finalResult.innerHTML = `
+            <div class="${resultClass}">
+                <div class="result-image">${resultEmoji}</div>
+                ${resultMessage}
+            </div>
+        `;
+
+        finalResult.style.display = 'block';
+        finalResult.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
 </body>
 </html>
