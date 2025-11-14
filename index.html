@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infografía: Riesgos Laborales</title>
+    <title>Infografía: Seguridad e Higiene</title>
     <style>
         /* Estilos generales */
         * {
@@ -521,6 +521,167 @@
             margin: 20px 0;
             text-align: center;
         }
+
+        /* MEJORA DE PESTAÑAS PARA MÓVIL */
+.nav-tabs {
+    display: flex;
+    background: #003F5C;
+    overflow-x: auto;
+    padding: 5px;
+    border-radius: 50px;
+    margin: 0 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tab {
+    padding: 16px 20px;
+    background: #2F4B7C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    flex: 1;
+    min-width: 160px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-radius: 40px;
+    margin: 0 3px;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.tab::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.tab:hover::before {
+    left: 100%;
+}
+
+.tab:hover {
+    background: #1a3a6b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.tab.active {
+    background: #F2C94C;
+    color: #003F5C;
+    border: 2px solid #003F5C;
+    box-shadow: 0 4px 15px rgba(242, 201, 76, 0.4);
+    font-weight: 700;
+}
+
+/* Efecto de pulso para el botón activo */
+.tab.active::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 40px;
+    border: 2px solid #F2C94C;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(242, 201, 76, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(242, 201, 76, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(242, 201, 76, 0);
+    }
+}
+
+/* Indicador visual adicional para móvil */
+.tab::after {
+    content: "👉";
+    opacity: 0;
+    margin-left: 8px;
+    transition: opacity 0.3s ease;
+    font-size: 0.9em;
+}
+
+.tab:hover::after {
+    opacity: 1;
+}
+
+/* MEJORAS ESPECÍFICAS PARA MÓVIL */
+@media (max-width: 768px) {
+    .nav-tabs {
+        flex-direction: row;
+        padding: 8px;
+        border-radius: 25px;
+        margin: 0 5px;
+        background: #2F4B7C;
+    }
+    
+    .tab {
+        min-width: 140px;
+        padding: 14px 16px;
+        font-size: 0.95rem;
+        margin: 0 2px;
+        border-radius: 20px;
+    }
+    
+    .tab.active {
+        border: 3px solid #003F5C;
+        box-shadow: 0 4px 12px rgba(242, 201, 76, 0.5);
+    }
+    
+    /* Texto más claro para indicar que son botones */
+    .tab {
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+    }
+    
+    /* Efecto de presión al tocar en móvil */
+    .tab:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+    }
+    
+    /* Indicador más visible en móvil */
+    .tab.active::before {
+        content: "✔ ";
+        margin-right: 5px;
+        font-weight: bold;
+    }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .nav-tabs {
+        padding: 6px;
+        border-radius: 20px;
+    }
+    
+    .tab {
+        min-width: 120px;
+        padding: 12px 10px;
+        font-size: 0.9rem;
+        border-radius: 15px;
+    }
+    
+    .tab.active {
+        border: 2px solid #003F5C;
+    }
+}
     </style>
 </head>
 <body>
@@ -537,7 +698,7 @@
         
         <div class="nav-tabs">
             <button class="tab active" onclick="openTab('identificar')">Identificar Riesgos</button>
-            <button class="tab" onclick="openTab('escenarios')">Toma la Decisión</button>
+            <button class="tab" onclick="openTab('escenarios')">¿Qué harías tu?</button>
         </div>
         
         <div class="content">
@@ -754,8 +915,8 @@
             
             <!-- Pestaña Escenarios Interactivos -->
             <div id="escenarios" class="tab-content">
-                <h2>Toma la Decisión - Tu Historia de Seguridad</h2>
-                <p>En estas situaciones reales, tu decisión marca la diferencia. Elige sabiamente.</p>
+                <h2>Toma la decisión correcta</h2>
+                <p>En escenarios reales, cada decisión cuenta. Haz clic en la opción que tomarías tú</p>
                 
                 <div id="scenario-1" class="scenario-container">
                     <h3>Escenario 1: Sismo en la Oficina</h3>
@@ -829,7 +990,7 @@
                     <div id="feedback-4" class="scenario-feedback"></div>
                 </div>
                 
-                <button class="check-button" onclick="showFinalResult()">Ver Mi Historia</button>
+                <button class="check-button" onclick="showFinalResult()">Revisar el impacto de mis decisiones</button>
                 
                 <div id="final-result" class="final-result"></div>
             </div>
