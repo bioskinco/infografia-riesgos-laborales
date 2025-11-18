@@ -291,6 +291,38 @@
             border-radius: 8px;
         }
         
+        /* RECUADRO QUE APARECE Y DESAPARECE SOBRE LAS IMÁGENES */
+        .image-pulse {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            border: 3px solid #F2C94C;
+            box-shadow: 0 0 0 0 rgba(242, 201, 76, 0.7);
+            animation: imagePulse 2s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes imagePulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(242, 201, 76, 0.7);
+                opacity: 1;
+            }
+            70% {
+                transform: scale(1.02);
+                box-shadow: 0 0 0 10px rgba(242, 201, 76, 0);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(242, 201, 76, 0);
+                opacity: 0;
+            }
+        }
+        
         /* CONTENIDO OCULTO INICIALMENTE */
         .risk-content {
             display: none;
@@ -581,12 +613,6 @@
             animation: pulse 1.5s infinite;
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
         /* BOTÓN DE EXAMEN */
         .exam-button {
             background: linear-gradient(135deg, #2F9E44, #4CAF50);
@@ -627,28 +653,6 @@
             border-radius: 10px;
             margin: 20px 0;
             text-align: center;
-        }
-
-        /* RECUADRO DE INVITACIÓN A CLIC */
-        .click-invitation {
-            background: linear-gradient(135deg, #F2C94C, #F2994A);
-            color: #003F5C;
-            padding: 12px 20px;
-            border-radius: 25px;
-            margin: 15px 0;
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 12px rgba(242, 201, 76, 0.4);
-            border: 2px solid #003F5C;
-            animation: invitationPulse 3s infinite;
-            cursor: pointer;
-        }
-        
-        @keyframes invitationPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
         }
 
         /* MEJORAS ESPECÍFICAS PARA MÓVIL */
@@ -755,13 +759,6 @@
             .scenario-image {
                 height: 140px;
             }
-            
-            /* Recuadro de invitación más pequeño en móvil */
-            .click-invitation {
-                font-size: 1rem;
-                padding: 10px 15px;
-                margin: 10px 0;
-            }
         }
         
         /* Para pantallas muy pequeñas */
@@ -780,11 +777,6 @@
             
             .tab.active {
                 border: 2px solid #003F5C;
-            }
-            
-            .click-invitation {
-                font-size: 0.9rem;
-                padding: 8px 12px;
             }
         }
     </style>
@@ -824,11 +816,6 @@
                     <p>El 80% de los accidentes laborales son prevenibles identificando riesgos a tiempo</p>
                 </div>
                 
-                <!-- RECUADRO DE INVITACIÓN A CLIC -->
-                <div class="click-invitation" onclick="showAllRiskContent()">
-                    👆 ¡Haz clic en las imágenes para descubrir más información!
-                </div>
-                
                 <!-- Oficinas Administrativas -->
                 <div class="area-section">
                     <div class="area-title">
@@ -843,6 +830,7 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="cables-desordenados.jpg" alt="Cables desordenados en oficina">
+                                <div class="image-pulse"></div>
                             </div>
                             <h4><i>⚠️</i> Riesgo de Tropezones</h4>
                             <div class="risk-content">
@@ -863,6 +851,7 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="postura-incorrecta.jpg" alt="Postura incorrecta en oficina">
+                                <div class="image-pulse"></div>
                             </div>
                             <h4><i>💺</i> Riesgo Ergonómico</h4>
                             <div class="risk-content">
@@ -883,6 +872,7 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="riesgo-electrico.jpg" alt="Riesgo eléctrico en oficina">
+                                <div class="image-pulse"></div>
                             </div>
                             <h4><i>⚡</i> Riesgo Eléctrico</h4>
                             <div class="risk-content">
@@ -916,6 +906,7 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="productos-quimicos.jpg" alt="Productos químicos en laboratorio">
+                                <div class="image-pulse"></div>
                             </div>
                             <h4><i>🧴</i> Riesgo Químico</h4>
                             <div class="risk-content">
@@ -936,6 +927,7 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="derrame-quimico.jpg" alt="Derrame químico en laboratorio">
+                                <div class="image-pulse"></div>
                             </div>
                             <h4><i>🚨</i> Derrames y Fugas</h4>
                             <div class="risk-content">
@@ -956,6 +948,7 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="incendio-laboratorio.jpg" alt="Incendio en laboratorio">
+                                <div class="image-pulse"></div>
                             </div>
                             <h4><i>🔥</i> Riesgo de Incendio</h4>
                             <div class="risk-content">
@@ -989,6 +982,7 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="conduccion-peligrosa.jpg" alt="Conducción peligrosa">
+                                <div class="image-pulse"></div>
                             </div>
                             <h4><i>🚗</i> Conducción Peligrosa</h4>
                             <div class="risk-content">
@@ -1009,6 +1003,7 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="manipulacion-carga.jpg" alt="Manipulación de carga">
+                                <div class="image-pulse"></div>
                             </div>
                             <h4><i>📦</i> Manipulación de Carga</h4>
                             <div class="risk-content">
@@ -1029,6 +1024,7 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="mantenimiento-vehiculos.jpg" alt="Mantenimiento de vehículos">
+                                <div class="image-pulse"></div>
                             </div>
                             <h4><i>🔧</i> Mantenimiento de Vehículos</h4>
                             <div class="risk-content">
@@ -1047,6 +1043,9 @@
                         </div>
                     </div>
                 </div>
+                        <div class="nav-tabs">
+                            <button class="tab" onclick="openTab('escenarios')">¿Qué harías tu?</button>
+                        </div>
             </div>
             
             <!-- Pestaña Escenarios Interactivos -->
@@ -1129,13 +1128,6 @@
                 <button class="check-button" onclick="showFinalResult()">Revisar el impacto de mis decisiones</button>
                 
                 <div id="final-result" class="final-result"></div>
-                
-                <!-- ENLACE AL EXAMEN -->
-                <div class="exam-link">
-                    <p>¿Listo para poner a prueba tus conocimientos?</p>
-                    <a href="https://forms.examen.seguridad_e_higiene" class="exam-button" target="_blank">Realizar Examen de Seguridad</a>
-                    <p>Completa este examen para evaluar tu comprensión de los conceptos de seguridad e higiene</p>
-                </div>
             </div>
         </div>
         
@@ -1200,22 +1192,6 @@
 
 
     // -------------------------------
-    // Función para mostrar todo el contenido de riesgo
-    // -------------------------------
-    function showAllRiskContent() {
-        const riskContents = document.querySelectorAll('.risk-content');
-        riskContents.forEach(content => {
-            content.classList.add('show');
-        });
-        
-        // Hacer scroll al primer elemento
-        if (riskContents.length > 0) {
-            riskContents[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    }
-
-
-    // -------------------------------
     // Selección de opciones
     // -------------------------------
     function selectOption(element, scenarioNumber, correctness) {
@@ -1270,7 +1246,7 @@
             case 1: return "Evacuar durante el sismo te expone a objetos que caen. Lo seguro es refugiarse primero.";
             case 2: return "Manipular químicos sin protección puede ser muy peligroso. Lo correcto es alertar y evacuar.";
             case 3: return "El café NO reemplaza el descanso. Manejar con sueño es tan peligroso como manejar ebrio.";
-            case 4: return "El agua y la electricidad no se mezclas. Podrías electrocutarte o avivar el fuego.";
+            case 4: return "El agua y la electricidad no se mezclan. Podrías electrocutarte o avivar el fuego.";
             default: return "No es la decisión más segura.";
         }
     }
