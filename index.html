@@ -168,19 +168,23 @@
             margin: 20px 0;
         }
         
+        /* EFECTOS 3D PARA TARJETAS */
         .risk-card {
             background: white;
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-top: 4px solid #B0BEC5;
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
         
         .risk-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
         
         .risk-card::before {
@@ -193,24 +197,65 @@
             background: #003F5C;
         }
         
-        /* CONTENEDORES DE IMÁGENES CORREGIDOS */
+        /* CONTENEDORES DE IMÁGENES CON EFECTO DE CLIC */
         .risk-image {
             width: 100%;
-            height: 140px; /* Altura fija para uniformidad */
+            height: 140px;
             border-radius: 8px;
             margin-bottom: 15px;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f5f5f5; /* Fondo por si la imagen no carga */
+            background: #f5f5f5;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .risk-image:hover {
+            transform: scale(1.03);
         }
         
         .risk-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ajusta la imagen recortando lo que sobra */
+            object-fit: cover;
             border-radius: 8px;
+        }
+        
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 63, 92, 0.8);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .risk-image:hover .image-overlay {
+            opacity: 1;
+        }
+        
+        /* CONTENIDO OCULTO INICIALMENTE */
+        .risk-content {
+            display: none;
+            margin-top: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .risk-content.show {
+            display: block;
         }
         
         .risk-card h4 {
@@ -286,7 +331,7 @@
         /* IMÁGENES DE ESCENARIOS MÁS PEQUEÑAS */
         .scenario-image {
             width: 100%;
-            height: 160px; /* Reducida para no tapar contenido */
+            height: 160px;
             border-radius: 8px;
             margin: 18px 0;
             overflow: hidden;
@@ -448,8 +493,239 @@
             border-top: 5px solid #F2C94C;
         }
         
-        /* Responsive */
+        /* AVISO DE EMERGENCIA 911 */
+        .emergency-alert {
+            background: linear-gradient(135deg, #E10600, #ff5252);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(225, 6, 0, 0.3);
+            border: 2px solid white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .emergency-alert::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.1) 10px,
+                rgba(255,255,255,0.1) 20px
+            );
+        }
+        
+        .emergency-alert h3 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .emergency-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* BOTÓN DE EXAMEN */
+        .exam-button {
+            background: linear-gradient(135deg, #2F9E44, #4CAF50);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 25px auto;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(47, 158, 68, 0.3);
+        }
+        
+        .exam-button:hover {
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(47, 158, 68, 0.4);
+        }
+        
+        .exam-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #003F5C, #2F9E44);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* MEJORA DE PESTAÑAS PARA MÓVIL */
+        .nav-tabs {
+            display: flex;
+            background: #003F5C;
+            overflow-x: auto;
+            padding: 5px;
+            border-radius: 50px;
+            margin: 0 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tab {
+            padding: 16px 20px;
+            background: #2F4B7C;
+            color: white;
+            border: none;
+            cursor: pointer;
+            flex: 1;
+            min-width: 160px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 40px;
+            margin: 0 3px;
+            border: 2px solid transparent;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .tab:hover::before {
+            left: 100%;
+        }
+
+        .tab:hover {
+            background: #1a3a6b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .tab.active {
+            background: #F2C94C;
+            color: #003F5C;
+            border: 2px solid #003F5C;
+            box-shadow: 0 4px 15px rgba(242, 201, 76, 0.4);
+            font-weight: 700;
+        }
+
+        /* Efecto de pulso para el botón activo */
+        .tab.active::after {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 40px;
+            border: 2px solid #F2C94C;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(242, 201, 76, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(242, 201, 76, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(242, 201, 76, 0);
+            }
+        }
+
+        /* Indicador visual adicional para móvil */
+        .tab::after {
+            content: "👉";
+            opacity: 0;
+            margin-left: 8px;
+            transition: opacity 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .tab:hover::after {
+            opacity: 1;
+        }
+
+        /* MEJORAS ESPECÍFICAS PARA MÓVIL */
         @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: row;
+                padding: 8px;
+                border-radius: 25px;
+                margin: 0 5px;
+                background: #2F4B7C;
+            }
+            
+            .tab {
+                min-width: 140px;
+                padding: 14px 16px;
+                font-size: 0.95rem;
+                margin: 0 2px;
+                border-radius: 20px;
+            }
+            
+            .tab.active {
+                border: 3px solid #003F5C;
+                box-shadow: 0 4px 12px rgba(242, 201, 76, 0.5);
+            }
+            
+            /* Texto más claro para indicar que son botones */
+            .tab {
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                font-weight: 700;
+            }
+            
+            /* Efecto de presión al tocar en móvil */
+            .tab:active {
+                transform: scale(0.95);
+                transition: transform 0.1s ease;
+            }
+            
+            /* Indicador más visible en móvil */
+            .tab.active::before {
+                content: "✔ ";
+                margin-right: 5px;
+                font-weight: bold;
+            }
+            
             h1 {
                 font-size: 1.8rem;
             }
@@ -513,175 +789,24 @@
             }
         }
         
-        .highlight-box {
-            background: linear-gradient(135deg, #003F5C, #2F9E44);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            text-align: center;
+        /* Para pantallas muy pequeñas */
+        @media (max-width: 480px) {
+            .nav-tabs {
+                padding: 6px;
+                border-radius: 20px;
+            }
+            
+            .tab {
+                min-width: 120px;
+                padding: 12px 10px;
+                font-size: 0.9rem;
+                border-radius: 15px;
+            }
+            
+            .tab.active {
+                border: 2px solid #003F5C;
+            }
         }
-
-        /* MEJORA DE PESTAÑAS PARA MÓVIL */
-.nav-tabs {
-    display: flex;
-    background: #003F5C;
-    overflow-x: auto;
-    padding: 5px;
-    border-radius: 50px;
-    margin: 0 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.tab {
-    padding: 16px 20px;
-    background: #2F4B7C;
-    color: white;
-    border: none;
-    cursor: pointer;
-    flex: 1;
-    min-width: 160px;
-    text-align: center;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border-radius: 40px;
-    margin: 0 3px;
-    border: 2px solid transparent;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-.tab::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.tab:hover::before {
-    left: 100%;
-}
-
-.tab:hover {
-    background: #1a3a6b;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.tab.active {
-    background: #F2C94C;
-    color: #003F5C;
-    border: 2px solid #003F5C;
-    box-shadow: 0 4px 15px rgba(242, 201, 76, 0.4);
-    font-weight: 700;
-}
-
-/* Efecto de pulso para el botón activo */
-.tab.active::after {
-    content: "";
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 40px;
-    border: 2px solid #F2C94C;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(242, 201, 76, 0.7);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(242, 201, 76, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(242, 201, 76, 0);
-    }
-}
-
-/* Indicador visual adicional para móvil */
-.tab::after {
-    content: "👉";
-    opacity: 0;
-    margin-left: 8px;
-    transition: opacity 0.3s ease;
-    font-size: 0.9em;
-}
-
-.tab:hover::after {
-    opacity: 1;
-}
-
-/* MEJORAS ESPECÍFICAS PARA MÓVIL */
-@media (max-width: 768px) {
-    .nav-tabs {
-        flex-direction: row;
-        padding: 8px;
-        border-radius: 25px;
-        margin: 0 5px;
-        background: #2F4B7C;
-    }
-    
-    .tab {
-        min-width: 140px;
-        padding: 14px 16px;
-        font-size: 0.95rem;
-        margin: 0 2px;
-        border-radius: 20px;
-    }
-    
-    .tab.active {
-        border: 3px solid #003F5C;
-        box-shadow: 0 4px 12px rgba(242, 201, 76, 0.5);
-    }
-    
-    /* Texto más claro para indicar que son botones */
-    .tab {
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        font-weight: 700;
-    }
-    
-    /* Efecto de presión al tocar en móvil */
-    .tab:active {
-        transform: scale(0.95);
-        transition: transform 0.1s ease;
-    }
-    
-    /* Indicador más visible en móvil */
-    .tab.active::before {
-        content: "✔ ";
-        margin-right: 5px;
-        font-weight: bold;
-    }
-}
-
-/* Para pantallas muy pequeñas */
-@media (max-width: 480px) {
-    .nav-tabs {
-        padding: 6px;
-        border-radius: 20px;
-    }
-    
-    .tab {
-        min-width: 120px;
-        padding: 12px 10px;
-        font-size: 0.9rem;
-        border-radius: 15px;
-    }
-    
-    .tab.active {
-        border: 2px solid #003F5C;
-    }
-}
     </style>
 </head>
 <body>
@@ -695,6 +820,14 @@
                 <p class="subtitle">Identifica riesgos laborales y toma decisiones seguras</p>
             </div>
         </header>
+        
+        <!-- AVISO DE EMERGENCIA 911 -->
+        <div class="emergency-alert">
+            <h3>¡EMERGENCIA!</h3>
+            <p>Ante cualquier situación de emergencia:</p>
+            <div class="emergency-number">911</div>
+            <p>Llama inmediatamente al número de emergencias</p>
+        </div>
         
         <div class="nav-tabs">
             <button class="tab active" onclick="openTab('identificar')">Identificar Riesgos</button>
@@ -723,55 +856,64 @@
                     
                     <div class="risks-grid">
                         <div class="risk-card">
-                            <div class="risk-image">
+                            <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="cables-desordenados.jpg" alt="Cables desordenados en oficina">
+                                <div class="image-overlay">Haz clic para ver más información sobre riesgos de tropiezos</div>
                             </div>
                             <h4><i>⚠️</i> Riesgo de Tropezones</h4>
-                            <p><strong>Condición insegura:</strong> Cables sueltos en pasillos, desorden en áreas de tránsito</p>
-                            <div class="do-dont">
-                                <div class="do">
-                                    <h5>✅ SÍ HACER</h5>
-                                    <p>• Usar canaletas para cables<br>• Mantener pasillos despejados<br>• Reportar condiciones peligrosas</p>
-                                </div>
-                                <div class="dont">
-                                    <h5>❌ NO HACER</h5>
-                                    <p>• Ignorar cables sueltos<br>• Colocar objetos en pasillos<br>• Correr en oficinas</p>
+                            <div class="risk-content">
+                                <p><strong>Condición insegura:</strong> Cables sueltos en pasillos, desorden en áreas de tránsito</p>
+                                <div class="do-dont">
+                                    <div class="do">
+                                        <h5>✅ SÍ HACER</h5>
+                                        <p>• Usar canaletas para cables<br>• Mantener pasillos despejados<br>• Reportar condiciones peligrosas</p>
+                                    </div>
+                                    <div class="dont">
+                                        <h5>❌ NO HACER</h5>
+                                        <p>• Ignorar cables sueltos<br>• Colocar objetos en pasillos<br>• Correr en oficinas</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="risk-card">
-                            <div class="risk-image">
+                            <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="postura-incorrecta.jpg" alt="Postura incorrecta en oficina">
+                                <div class="image-overlay">Haz clic para ver más información sobre ergonomía</div>
                             </div>
                             <h4><i>💺</i> Riesgo Ergonómico</h4>
-                            <p><strong>Condición insegura:</strong> Sillas no ajustables, pantallas a mala altura</p>
-                            <div class="do-dont">
-                                <div class="do">
-                                    <h5>✅ SÍ HACER</h5>
-                                    <p>• Ajustar silla y monitor<br>• Hacer pausas activas<br>• Mantener espalda recta</p>
-                                </div>
-                                <div class="dont">
-                                    <h5>❌ NO HACER</h5>
-                                    <p>• Permanecer sentado por horas<br>• Encorbarse hacia el monitor<br>• Ignorar el dolor de espalda</p>
+                            <div class="risk-content">
+                                <p><strong>Condición insegura:</strong> Sillas no ajustables, pantallas a mala altura</p>
+                                <div class="do-dont">
+                                    <div class="do">
+                                        <h5>✅ SÍ HACER</h5>
+                                        <p>• Ajustar silla y monitor<br>• Hacer pausas activas<br>• Mantener espalda recta</p>
+                                    </div>
+                                    <div class="dont">
+                                        <h5>❌ NO HACER</h5>
+                                        <p>• Permanecer sentado por horas<br>• Encorbarse hacia el monitor<br>• Ignorar el dolor de espalda</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="risk-card">
-                            <div class="risk-image">
+                            <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="riesgo-electrico.jpg" alt="Riesgo eléctrico en oficina">
+                                <div class="image-overlay">Haz clic para ver más información sobre riesgos eléctricos</div>
                             </div>
                             <h4><i>⚡</i> Riesgo Eléctrico</h4>
-                            <p><strong>Condición insegura:</strong> Multicontactos sobrecargados, equipos dañados</p>
-                            <div class="do-dont">
-                                <div class="do">
-                                    <h5>✅ SÍ HACER</h5>
-                                    <p>• Usar Multicontactos certificados<br>• Reportar equipos dañados<br>• Desconectar durante tormentas</p>
-                                </div>
-                                <div class="dont">
-                                    <h5>❌ NO HACER</h5>
-                                    <p>• Conectar muchos equipos<br>• Usar cables dañados<br>• Tocar con manos mojadas</p>
+                            <div class="risk-content">
+                                <p><strong>Condición insegura:</strong> Multicontactos sobrecargados, equipos dañados</p>
+                                <div class="do-dont">
+                                    <div class="do">
+                                        <h5>✅ SÍ HACER</h5>
+                                        <p>• Usar Multicontactos certificados<br>• Reportar equipos dañados<br>• Desconectar durante tormentas</p>
+                                    </div>
+                                    <div class="dont">
+                                        <h5>❌ NO HACER</h5>
+                                        <p>• Conectar muchos equipos<br>• Usar cables dañados<br>• Tocar con manos mojadas</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -790,55 +932,64 @@
                     
                     <div class="risks-grid">
                         <div class="risk-card">
-                            <div class="risk-image">
+                            <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="productos-quimicos.jpg" alt="Productos químicos en laboratorio">
+                                <div class="image-overlay">Haz clic para ver más información sobre riesgos químicos</div>
                             </div>
                             <h4><i>🧴</i> Riesgo Químico</h4>
-                            <p><strong>Condición insegura:</strong> Productos mal almacenados, falta de ventilación</p>
-                            <div class="do-dont">
-                                <div class="do">
-                                    <h5>✅ SÍ HACER</h5>
-                                    <p>• Usar EPP completo<br>• Leer las Hojas de Seguridad antes de usar<br>• Trabajar en campana</p>
-                                </div>
-                                <div class="dont">
-                                    <h5>❌ NO HACER</h5>
-                                    <p>• Mezclar productos desconocidos<br>• Oler productos directamente<br>• Trabajar sin protección</p>
+                            <div class="risk-content">
+                                <p><strong>Condición insegura:</strong> Productos mal almacenados, falta de ventilación</p>
+                                <div class="do-dont">
+                                    <div class="do">
+                                        <h5>✅ SÍ HACER</h5>
+                                        <p>• Usar EPP completo<br>• Leer las Hojas de Seguridad antes de usar<br>• Trabajar en campana</p>
+                                    </div>
+                                    <div class="dont">
+                                        <h5>❌ NO HACER</h5>
+                                        <p>• Mezclar productos desconocidos<br>• Oler productos directamente<br>• Trabajar sin protección</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="risk-card">
-                            <div class="risk-image">
+                            <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="derrame-quimico.jpg" alt="Derrame químico en laboratorio">
+                                <div class="image-overlay">Haz clic para ver más información sobre derrames</div>
                             </div>
                             <h4><i>🚨</i> Derrames y Fugas</h4>
-                            <p><strong>Condición insegura:</strong> Envases inestables, kits de derrame incompletos</p>
-                            <div class="do-dont">
-                                <div class="do">
-                                    <h5>✅ SÍ HACER</h5>
-                                    <p>• Alertar a todos inmediatamente<br>• Usar kit de derrames<br>• Conocer procedimientos</p>
-                                </div>
-                                <div class="dont">
-                                    <h5>❌ NO HACER</h5>
-                                    <p>• Intentar limpiar sin protección<br>• Subestimar el peligro<br>• Ocultar incidentes</p>
+                            <div class="risk-content">
+                                <p><strong>Condición insegura:</strong> Envases inestables, kits de derrame incompletos</p>
+                                <div class="do-dont">
+                                    <div class="do">
+                                        <h5>✅ SÍ HACER</h5>
+                                        <p>• Alertar a todos inmediatamente<br>• Usar kit de derrames<br>• Conocer procedimientos</p>
+                                    </div>
+                                    <div class="dont">
+                                        <h5>❌ NO HACER</h5>
+                                        <p>• Intentar limpiar sin protección<br>• Subestimar el peligro<br>• Ocultar incidentes</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="risk-card">
-                            <div class="risk-image">
+                            <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="incendio-laboratorio.jpg" alt="Incendio en laboratorio">
+                                <div class="image-overlay">Haz clic para ver más información sobre riesgos de incendio</div>
                             </div>
                             <h4><i>🔥</i> Riesgo de Incendio</h4>
-                            <p><strong>Condición insegura:</strong> Materiales inflamables cerca de fuentes de calor</p>
-                            <div class="do-dont">
-                                <div class="do">
-                                    <h5>✅ SÍ HACER</h5>
-                                    <p>• Conocer ubicación de extintores<br>• Mantener áreas despejadas<br>• Saber usar equipos</p>
-                                </div>
-                                <div class="dont">
-                                    <h5>❌ NO HACER</h5>
-                                    <p>• Bloquear salidas<br>• Usar llamas sin precaución<br>• Almacenar inflamables mal</p>
+                            <div class="risk-content">
+                                <p><strong>Condición insegura:</strong> Materiales inflamables cerca de fuentes de calor</p>
+                                <div class="do-dont">
+                                    <div class="do">
+                                        <h5>✅ SÍ HACER</h5>
+                                        <p>• Conocer ubicación de extintores<br>• Mantener áreas despejadas<br>• Saber usar equipos</p>
+                                    </div>
+                                    <div class="dont">
+                                        <h5>❌ NO HACER</h5>
+                                        <p>• Bloquear salidas<br>• Usar llamas sin precaución<br>• Almacenar inflamables mal</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -857,55 +1008,64 @@
                     
                     <div class="risks-grid">
                         <div class="risk-card">
-                            <div class="risk-image">
+                            <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="conduccion-peligrosa.jpg" alt="Conducción peligrosa">
+                                <div class="image-overlay">Haz clic para ver más información sobre conducción segura</div>
                             </div>
                             <h4><i>🚗</i> Conducción Peligrosa</h4>
-                            <p><strong>Acto inseguro:</strong> Exceso de velocidad, uso del celular, fatiga</p>
-                            <div class="do-dont">
-                                <div class="do">
-                                    <h5>✅ SÍ HACER</h5>
-                                    <p>• Respetar límites de velocidad<br>• Usar manos libres<br>• Descansar cada 2 horas</p>
-                                </div>
-                                <div class="dont">
-                                    <h5>❌ NO HACER</h5>
-                                    <p>• Usar celular manejando<br>• Conducir con sueño<br>• Exceder horarios</p>
+                            <div class="risk-content">
+                                <p><strong>Acto inseguro:</strong> Exceso de velocidad, uso del celular, fatiga</p>
+                                <div class="do-dont">
+                                    <div class="do">
+                                        <h5>✅ SÍ HACER</h5>
+                                        <p>• Respetar límites de velocidad<br>• Usar manos libres<br>• Descansar cada 2 horas</p>
+                                    </div>
+                                    <div class="dont">
+                                        <h5>❌ NO HACER</h5>
+                                        <p>• Usar celular manejando<br>• Conducir con sueño<br>• Exceder horarios</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="risk-card">
-                            <div class="risk-image">
+                            <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="manipulacion-carga.jpg" alt="Manipulación de carga">
+                                <div class="image-overlay">Haz clic para ver más información sobre manipulación segura</div>
                             </div>
                             <h4><i>📦</i> Manipulación de Carga</h4>
-                            <p><strong>Condición insegura:</strong> Carga mal asegurada, equipo inadecuado</p>
-                            <div class="do-dont">
-                                <div class="do">
-                                    <h5>✅ SÍ HACER</h5>
-                                    <p>• Verificar carga asegurada<br>• Usar equipo de protección<br>• Seguir procedimientos</p>
-                                </div>
-                                <div class="dont">
-                                    <h5>❌ NO HACER</h5>
-                                    <p>• Levantar peso incorrectamente<br>• Saltarse inspecciones<br>• Trabajar apurado</p>
+                            <div class="risk-content">
+                                <p><strong>Condición insegura:</strong> Carga mal asegurada, equipo inadecuado</p>
+                                <div class="do-dont">
+                                    <div class="do">
+                                        <h5>✅ SÍ HACER</h5>
+                                        <p>• Verificar carga asegurada<br>• Usar equipo de protección<br>• Seguir procedimientos</p>
+                                    </div>
+                                    <div class="dont">
+                                        <h5>❌ NO HACER</h5>
+                                        <p>• Levantar peso incorrectamente<br>• Saltarse inspecciones<br>• Trabajar apurado</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="risk-card">
-                            <div class="risk-image">
+                            <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="mantenimiento-vehiculos.jpg" alt="Mantenimiento de vehículos">
+                                <div class="image-overlay">Haz clic para ver más información sobre mantenimiento seguro</div>
                             </div>
                             <h4><i>🔧</i> Mantenimiento de Vehículos</h4>
-                            <p><strong>Acto inseguro:</strong> No usar EPP, procedimientos incorrectos</p>
-                            <div class="do-dont">
-                                <div class="do">
-                                    <h5>✅ SÍ HACER</h5>
-                                    <p>• Usar gafas y guantes<br>• Bloquear vehículos<br>• Seguir manuales</p>
-                                </div>
-                                <div class="dont">
-                                    <h5>❌ NO HACER</h5>
-                                    <p>• Trabajar bajo vehículos sin soporte<br>• Saltarse pasos de seguridad<br>• Usar herramientas inadecuadas</p>
+                            <div class="risk-content">
+                                <p><strong>Acto inseguro:</strong> No usar EPP, procedimientos incorrectos</p>
+                                <div class="do-dont">
+                                    <div class="do">
+                                        <h5>✅ SÍ HACER</h5>
+                                        <p>• Usar gafas y guantes<br>• Bloquear vehículos<br>• Seguir manuales</p>
+                                    </div>
+                                    <div class="dont">
+                                        <h5>❌ NO HACER</h5>
+                                        <p>• Trabajar bajo vehículos sin soporte<br>• Saltarse pasos de seguridad<br>• Usar herramientas inadecuadas</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1043,6 +1203,23 @@
 
 
     // -------------------------------
+    // Función para mostrar/ocultar contenido de riesgo
+    // -------------------------------
+    function toggleRiskContent(imageElement) {
+        const riskCard = imageElement.closest('.risk-card');
+        const riskContent = riskCard.querySelector('.risk-content');
+        
+        // Alternar la clase 'show' para mostrar u ocultar el contenido
+        riskContent.classList.toggle('show');
+        
+        // Hacer scroll suave hacia el contenido si se está mostrando
+        if (riskContent.classList.contains('show')) {
+            riskContent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }
+
+
+    // -------------------------------
     // Selección de opciones
     // -------------------------------
     function selectOption(element, scenarioNumber, correctness) {
@@ -1116,6 +1293,10 @@
                     <div class="result-image">📝</div>
                     <h3>Tu Historia está Incompleta</h3>
                     <p>Has tomado decisiones en ${answeredCount} de 4 situaciones. Completa todas para ver tu resultado final.</p>
+                    <div class="exam-recommendation">
+                        <h4>No completaste la simulación, pero puedes intentar el examen</h4>
+                        <a href="https://forms.examen.seguridad_e_higiene" class="exam-button" target="_blank">Realizar Examen</a>
+                    </div>
                 </div>
             `;
             finalResult.style.display = 'block';
@@ -1126,7 +1307,7 @@
         const correctCount = Object.values(userAnswers).filter(a => a === 'correct').length;
         const percentage = (correctCount / 4) * 100;
 
-        let resultClass, resultEmoji, resultMessage;
+        let resultClass, resultEmoji, resultMessage, examMessage;
 
         if (percentage >= 75) {
             resultClass = 'result-good';
@@ -1136,6 +1317,7 @@
                 <p>Tus decisiones muestran un sólido conocimiento en seguridad laboral.</p>
                 <p><strong>${correctCount}/4 correctas (${percentage}%)</strong></p>
             `;
+            examMessage = "¡Estás listo para realizar el examen!";
         } else if (percentage >= 50) {
             resultClass = 'result-average';
             resultEmoji = '👍';
@@ -1144,6 +1326,7 @@
                 <p>Aún puedes reforzar algunos criterios de seguridad.</p>
                 <p><strong>${correctCount}/4 correctas (${percentage}%)</strong></p>
             `;
+            examMessage = "Puedes intentar el examen, pero te recomendamos repasar primero.";
         } else {
             resultClass = 'result-poor';
             resultEmoji = '📚';
@@ -1152,12 +1335,17 @@
                 <p>Revisa la infografía y capacítate para tomar mejores decisiones.</p>
                 <p><strong>${correctCount}/4 correctas (${percentage}%)</strong></p>
             `;
+            examMessage = "Te recomendamos repasar antes de realizar el examen.";
         }
 
         finalResult.innerHTML = `
             <div class="${resultClass}">
                 <div class="result-image">${resultEmoji}</div>
                 ${resultMessage}
+                <div class="exam-recommendation">
+                    <h4>${examMessage}</h4>
+                    <a href="https://forms.examen.seguridad_e_higiene" class="exam-button" target="_blank">Realizar Examen</a>
+                </div>
             </div>
         `;
 
