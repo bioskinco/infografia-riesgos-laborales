@@ -75,30 +75,97 @@
             display: flex;
             background: #003F5C;
             overflow-x: auto;
+            padding: 5px;
+            border-radius: 50px;
+            margin: 0 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-        
+
         .tab {
-            padding: 15px 20px;
-            background: #003F5C;
+            padding: 16px 20px;
+            background: #2F4B7C;
             color: white;
             border: none;
             cursor: pointer;
             flex: 1;
-            min-width: 150px;
+            min-width: 160px;
             text-align: center;
             font-size: 1rem;
             font-weight: 600;
             transition: all 0.3s ease;
-            border-right: 1px solid #2F4B7C;
+            border-radius: 40px;
+            margin: 0 3px;
+            border: 2px solid transparent;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .tab::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .tab:hover::before {
+            left: 100%;
+        }
+
         .tab:hover {
-            background: #2F4B7C;
+            background: #1a3a6b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        
+
         .tab.active {
-            background: #CFD8DC;
+            background: #F2C94C;
             color: #003F5C;
+            border: 2px solid #003F5C;
+            box-shadow: 0 4px 15px rgba(242, 201, 76, 0.4);
+            font-weight: 700;
+        }
+
+        /* Efecto de pulso para el botón activo */
+        .tab.active::after {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 40px;
+            border: 2px solid #F2C94C;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(242, 201, 76, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(242, 201, 76, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(242, 201, 76, 0);
+            }
+        }
+
+        /* Indicador visual adicional para móvil */
+        .tab::after {
+            content: "👉";
+            opacity: 0;
+            margin-left: 8px;
+            transition: opacity 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .tab:hover::after {
+            opacity: 1;
         }
         
         .content {
@@ -222,29 +289,6 @@
             height: 100%;
             object-fit: cover;
             border-radius: 8px;
-        }
-        
-        .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 63, 92, 0.8);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            font-weight: 600;
-        }
-        
-        .risk-image:hover .image-overlay {
-            opacity: 1;
         }
         
         /* CONTENIDO OCULTO INICIALMENTE */
@@ -585,102 +629,26 @@
             text-align: center;
         }
 
-        /* MEJORA DE PESTAÑAS PARA MÓVIL */
-        .nav-tabs {
-            display: flex;
-            background: #003F5C;
-            overflow-x: auto;
-            padding: 5px;
-            border-radius: 50px;
-            margin: 0 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .tab {
-            padding: 16px 20px;
-            background: #2F4B7C;
-            color: white;
-            border: none;
-            cursor: pointer;
-            flex: 1;
-            min-width: 160px;
-            text-align: center;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border-radius: 40px;
-            margin: 0 3px;
-            border: 2px solid transparent;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tab::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .tab:hover::before {
-            left: 100%;
-        }
-
-        .tab:hover {
-            background: #1a3a6b;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .tab.active {
-            background: #F2C94C;
+        /* RECUADRO DE INVITACIÓN A CLIC */
+        .click-invitation {
+            background: linear-gradient(135deg, #F2C94C, #F2994A);
             color: #003F5C;
-            border: 2px solid #003F5C;
-            box-shadow: 0 4px 15px rgba(242, 201, 76, 0.4);
+            padding: 12px 20px;
+            border-radius: 25px;
+            margin: 15px 0;
+            text-align: center;
             font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(242, 201, 76, 0.4);
+            border: 2px solid #003F5C;
+            animation: invitationPulse 3s infinite;
+            cursor: pointer;
         }
-
-        /* Efecto de pulso para el botón activo */
-        .tab.active::after {
-            content: "";
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 40px;
-            border: 2px solid #F2C94C;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(242, 201, 76, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(242, 201, 76, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(242, 201, 76, 0);
-            }
-        }
-
-        /* Indicador visual adicional para móvil */
-        .tab::after {
-            content: "👉";
-            opacity: 0;
-            margin-left: 8px;
-            transition: opacity 0.3s ease;
-            font-size: 0.9em;
-        }
-
-        .tab:hover::after {
-            opacity: 1;
+        
+        @keyframes invitationPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
 
         /* MEJORAS ESPECÍFICAS PARA MÓVIL */
@@ -787,6 +755,13 @@
             .scenario-image {
                 height: 140px;
             }
+            
+            /* Recuadro de invitación más pequeño en móvil */
+            .click-invitation {
+                font-size: 1rem;
+                padding: 10px 15px;
+                margin: 10px 0;
+            }
         }
         
         /* Para pantallas muy pequeñas */
@@ -805,6 +780,11 @@
             
             .tab.active {
                 border: 2px solid #003F5C;
+            }
+            
+            .click-invitation {
+                font-size: 0.9rem;
+                padding: 8px 12px;
             }
         }
     </style>
@@ -844,6 +824,11 @@
                     <p>El 80% de los accidentes laborales son prevenibles identificando riesgos a tiempo</p>
                 </div>
                 
+                <!-- RECUADRO DE INVITACIÓN A CLIC -->
+                <div class="click-invitation" onclick="showAllRiskContent()">
+                    👆 ¡Haz clic en las imágenes para descubrir más información!
+                </div>
+                
                 <!-- Oficinas Administrativas -->
                 <div class="area-section">
                     <div class="area-title">
@@ -858,7 +843,6 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="cables-desordenados.jpg" alt="Cables desordenados en oficina">
-                                <div class="image-overlay">Haz clic para ver más información sobre riesgos de tropiezos</div>
                             </div>
                             <h4><i>⚠️</i> Riesgo de Tropezones</h4>
                             <div class="risk-content">
@@ -879,7 +863,6 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="postura-incorrecta.jpg" alt="Postura incorrecta en oficina">
-                                <div class="image-overlay">Haz clic para ver más información sobre ergonomía</div>
                             </div>
                             <h4><i>💺</i> Riesgo Ergonómico</h4>
                             <div class="risk-content">
@@ -900,7 +883,6 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="riesgo-electrico.jpg" alt="Riesgo eléctrico en oficina">
-                                <div class="image-overlay">Haz clic para ver más información sobre riesgos eléctricos</div>
                             </div>
                             <h4><i>⚡</i> Riesgo Eléctrico</h4>
                             <div class="risk-content">
@@ -934,7 +916,6 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="productos-quimicos.jpg" alt="Productos químicos en laboratorio">
-                                <div class="image-overlay">Haz clic para ver más información sobre riesgos químicos</div>
                             </div>
                             <h4><i>🧴</i> Riesgo Químico</h4>
                             <div class="risk-content">
@@ -955,7 +936,6 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="derrame-quimico.jpg" alt="Derrame químico en laboratorio">
-                                <div class="image-overlay">Haz clic para ver más información sobre derrames</div>
                             </div>
                             <h4><i>🚨</i> Derrames y Fugas</h4>
                             <div class="risk-content">
@@ -976,7 +956,6 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="incendio-laboratorio.jpg" alt="Incendio en laboratorio">
-                                <div class="image-overlay">Haz clic para ver más información sobre riesgos de incendio</div>
                             </div>
                             <h4><i>🔥</i> Riesgo de Incendio</h4>
                             <div class="risk-content">
@@ -1010,7 +989,6 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="conduccion-peligrosa.jpg" alt="Conducción peligrosa">
-                                <div class="image-overlay">Haz clic para ver más información sobre conducción segura</div>
                             </div>
                             <h4><i>🚗</i> Conducción Peligrosa</h4>
                             <div class="risk-content">
@@ -1031,7 +1009,6 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="manipulacion-carga.jpg" alt="Manipulación de carga">
-                                <div class="image-overlay">Haz clic para ver más información sobre manipulación segura</div>
                             </div>
                             <h4><i>📦</i> Manipulación de Carga</h4>
                             <div class="risk-content">
@@ -1052,7 +1029,6 @@
                         <div class="risk-card">
                             <div class="risk-image" onclick="toggleRiskContent(this)">
                                 <img src="mantenimiento-vehiculos.jpg" alt="Mantenimiento de vehículos">
-                                <div class="image-overlay">Haz clic para ver más información sobre mantenimiento seguro</div>
                             </div>
                             <h4><i>🔧</i> Mantenimiento de Vehículos</h4>
                             <div class="risk-content">
@@ -1071,9 +1047,6 @@
                         </div>
                     </div>
                 </div>
-                        <div class="nav-tabs">
-                            <button class="tab" onclick="openTab('escenarios')">¿Qué harías tu?</button>
-                        </div>
             </div>
             
             <!-- Pestaña Escenarios Interactivos -->
@@ -1156,6 +1129,13 @@
                 <button class="check-button" onclick="showFinalResult()">Revisar el impacto de mis decisiones</button>
                 
                 <div id="final-result" class="final-result"></div>
+                
+                <!-- ENLACE AL EXAMEN -->
+                <div class="exam-link">
+                    <p>¿Listo para poner a prueba tus conocimientos?</p>
+                    <a href="https://forms.examen.seguridad_e_higiene" class="exam-button" target="_blank">Realizar Examen de Seguridad</a>
+                    <p>Completa este examen para evaluar tu comprensión de los conceptos de seguridad e higiene</p>
+                </div>
             </div>
         </div>
         
@@ -1220,6 +1200,22 @@
 
 
     // -------------------------------
+    // Función para mostrar todo el contenido de riesgo
+    // -------------------------------
+    function showAllRiskContent() {
+        const riskContents = document.querySelectorAll('.risk-content');
+        riskContents.forEach(content => {
+            content.classList.add('show');
+        });
+        
+        // Hacer scroll al primer elemento
+        if (riskContents.length > 0) {
+            riskContents[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+
+    // -------------------------------
     // Selección de opciones
     // -------------------------------
     function selectOption(element, scenarioNumber, correctness) {
@@ -1274,7 +1270,7 @@
             case 1: return "Evacuar durante el sismo te expone a objetos que caen. Lo seguro es refugiarse primero.";
             case 2: return "Manipular químicos sin protección puede ser muy peligroso. Lo correcto es alertar y evacuar.";
             case 3: return "El café NO reemplaza el descanso. Manejar con sueño es tan peligroso como manejar ebrio.";
-            case 4: return "El agua y la electricidad no se mezclan. Podrías electrocutarte o avivar el fuego.";
+            case 4: return "El agua y la electricidad no se mezclas. Podrías electrocutarte o avivar el fuego.";
             default: return "No es la decisión más segura.";
         }
     }
