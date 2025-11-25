@@ -655,6 +655,26 @@
             text-align: center;
         }
 
+        .click-invitation {
+            background: linear-gradient(135deg, #F2C94C, #f7d96a);
+            color: #003F5C;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px dashed #003F5C;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .click-invitation:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
         /* MEJORAS ESPECÍFICAS PARA MÓVIL */
         @media (max-width: 768px) {
             .nav-tabs {
@@ -813,6 +833,41 @@
         @media (max-width: 768px) {
             .risk-image:hover img {
                 transform: scale(1.05); /* Zoom más sutil en móvil */
+            }
+        }
+
+        /* BOTÓN SIGUIENTE PARA MÓVIL */
+        .next-button-mobile {
+            background: linear-gradient(135deg, #F2C94C, #f7d96a);
+            color: #003F5C;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin: 30px auto;
+            display: none;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(242, 201, 76, 0.3);
+            border: 2px solid #003F5C;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .next-button-mobile:hover {
+            background: linear-gradient(135deg, #f7d96a, #F2C94C);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(242, 201, 76, 0.4);
+        }
+
+        /* Mostrar solo en móvil */
+        @media (max-width: 768px) {
+            .next-button-mobile {
+                display: block;
             }
         }
     </style>
@@ -1062,44 +1117,45 @@
                             </div>
                         </div>
                         
-                            <div class="risk-card">
-                                <div class="risk-image" onclick="toggleRiskContent(this)">
-                                    <img src="transporte-publico.jpg" alt="Seguridad en transporte público">
-                                    <div class="image-pulse"></div>
-                                </div>
-                                <h4><i>🚍</i> Seguridad en Transporte Público y Calle</h4>
-                                <div class="risk-content">
-                                    <p><strong>Acto inseguro:</strong> Viajar distraído, mostrar objetos de valor, usar zonas inseguras</p>
-                                    <div class="do-dont">
-                                        <div class="do">
-                                            <h5>✅ SÍ HACER</h5>
-                                            <p>
-                                                • Mantener atención al entorno<br>
-                                                • Llevar mochila/bolsa al frente<br>
-                                                • Usar rutas y paradas iluminadas<br>
-                                                • Avisar tus traslados o compartir ubicación<br>
-                                                • Bajar del transporte solo cuando esté detenido
-                                            </p>
-                                        </div>
-                                        <div class="dont">
-                                            <h5>❌ NO HACER</h5>
-                                            <p>
-                                                • Usar celular o audífonos que te distraigan<br>
-                                                • Mostrar dinero, tarjetas o equipo de trabajo<br>
-                                                • Tomar transporte vacío o en zonas poco seguras<br>
-                                                • Correr para subir o bajar del transporte<br>
-                                                • Cruzar calles distraído
-                                            </p>
-                                        </div>
+                        <!-- REEMPLAZADO: Seguridad en Transporte Público y Calle -->
+                        <div class="risk-card">
+                            <div class="risk-image" onclick="toggleRiskContent(this)">
+                                <img src="transporte-publico.jpg" alt="Seguridad en transporte público">
+                                <div class="image-pulse"></div>
+                            </div>
+                            <h4><i>🚍</i> Seguridad en Transporte Público y Calle</h4>
+                            <div class="risk-content">
+                                <p><strong>Acto inseguro:</strong> Viajar distraído, mostrar objetos de valor, usar zonas inseguras</p>
+                                <div class="do-dont">
+                                    <div class="do">
+                                        <h5>✅ SÍ HACER</h5>
+                                        <p>
+                                            • Mantener atención al entorno<br>
+                                            • Llevar mochila/bolsa al frente<br>
+                                            • Usar rutas y paradas iluminadas<br>
+                                            • Avisar tus traslados o compartir ubicación<br>
+                                            • Bajar del transporte solo cuando esté detenido
+                                        </p>
+                                    </div>
+                                    <div class="dont">
+                                        <h5>❌ NO HACER</h5>
+                                        <p>
+                                            • Usar celular o audífonos que te distraigan<br>
+                                            • Mostrar dinero, tarjetas o equipo de trabajo<br>
+                                            • Tomar transporte vacío o en zonas poco seguras<br>
+                                            • Correr para subir o bajar del transporte<br>
+                                            • Cruzar calles distraído
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                        <div class="nav-tabs">
-                            <button class="tab" onclick="openTab('escenarios')">¿Qué harías tu?</button>
-                        </div>
+                <!-- BOTÓN SIGUIENTE PARA MÓVIL -->
+                <button class="next-button-mobile" onclick="openTab('escenarios')">
+                    Siguiente: ¿Qué harías tú? ➜
+                </button>
             </div>
             
             <!-- Pestaña Escenarios Interactivos -->
